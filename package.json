@@ -12,7 +12,11 @@
   },
   "author": "Oleksandr Demian",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OleksandrDemian/ide_open.git"
+  },
   "dependencies": {
-    "fs-extra": "^9.0.1",
+    "fs-extra": "^9.0.1"
   }
 }
