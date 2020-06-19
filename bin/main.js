@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 const childProcess = require("child_process");
 const config = require("../lib/config");
+const inquirer = require('inquirer');
 
 const addIDE = (alias, path) => {
 	const ides = config.get("ide");
@@ -50,9 +51,28 @@ const listIde = () => {
 	}
 };
 
-const askAlias = () => {
-	//todo
-	console.log("Currently non supported, run ide-open [alias] to open folder in editor");
+const askAlias = async () => {
+	const ides = config.get("ide");
+	if(ides.length === 0){
+		console.log("You don't have any editor associated with open-ide");
+	} else if(ides.length === 1){
+		console.log("Only one edito is present, I will use it");
+		open(ides[0].alias);
+	} else {
+		const aliases = [];
+		for(let i = 0; i < ides.length; i++){
+			aliases.push(ides[i].alias);
+		}
+		const answers = await inquirer.prompt([
+			{
+				type: 'list',
+				name: 'ide',
+				message: 'Choose editor:',
+				choices: aliases
+			}
+		]);
+		open(answers["ide"]);
+	}
 };
 
 const getIde = (alias) => {
@@ -68,22 +88,26 @@ const getIde = (alias) => {
 };
 
 // EXECUTION
-try {
-	const args = process.argv.slice(2, process.argv.length);
-	if (args.length < 1) {
-		//open default
-		askAlias();
-	} else if (args[0] === "add") {
-		addIDE(args[1], args[2]);
-	} else if (args[0] === "rm") {
-		removeIDE(args[1]);
-	} else if (args[0] === "list") {
-		listIde();
-	} else {
-		open(args[0]);
+const execute = async () => {
+	try {
+		const args = process.argv.slice(2, process.argv.length);
+		if (args.length < 1) {
+			//open default
+			await askAlias();
+		} else if (args[0] === "add") {
+			addIDE(args[1], args[2]);
+		} else if (args[0] === "rm") {
+			removeIDE(args[1]);
+		} else if (args[0] === "list") {
+			listIde();
+		} else {
+			open(args[0]);
+		}
+		
+		process.exit(0);
+	} catch (e) {
+		process.exit(1);
 	}
-	
-	process.exit(0);
-} catch (e) {
-	process.exit(1);
-}
+};
+
+execute();
