@@ -46,7 +46,7 @@ const listIde = () => {
 		for(let i = 0; i < ides.length; i++){
 			console.log("Alias: " + ides[i].alias);
 			console.log("Path: " + ides[i].path);
-			console.log("--------------------")
+			console.log("<-------------------->");
 		}
 	}
 };
@@ -56,13 +56,15 @@ const askAlias = async () => {
 	if(ides.length === 0){
 		console.log("You don't have any editor associated with open-ide");
 	} else if(ides.length === 1){
-		console.log("Only one edito is present, I will use it");
+		console.log("Only one editor is present, I will use it");
 		open(ides[0].alias);
 	} else {
 		const aliases = [];
 		for(let i = 0; i < ides.length; i++){
 			aliases.push(ides[i].alias);
 		}
+		aliases.push("cancel");
+		
 		const answers = await inquirer.prompt([
 			{
 				type: 'list',
@@ -71,7 +73,9 @@ const askAlias = async () => {
 				choices: aliases
 			}
 		]);
-		open(answers["ide"]);
+		if(answers["ide"] !== "cancel"){
+			open(answers["ide"]);
+		}
 	}
 };
 

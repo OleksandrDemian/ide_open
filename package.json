@@ -1,16 +1,18 @@
 {
   "name": "open-ide",
-  "version": "1.0.2",
-  "description": "Opens the folder in IDE from command line",
+  "version": "1.0.5",
+  "description": "Opens the folder in editor from command line",
   "bin": {
     "ide-open": "bin/main.js",
-    "open-ide": "bin/main.js"
+    "open-ide": "bin/main.js",
+    "ideopen": "bin/main.js",
+    "openide": "bin/main.js"
   },
   "scripts": {
     "ide-open": "ide-open",
-    "ideopen": "ide-open",
+    "ideopen": "ideopen",
     "open-ide": "open-ide",
-    "openide": "open-ide"
+    "openide": "openide"
   },
   "author": "Oleksandr Demian",
   "license": "ISC",
