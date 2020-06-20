@@ -1,6 +1,6 @@
 {
   "name": "open-ide",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Opens the folder in editor from command line",
   "bin": {
     "ide-open": "bin/main.js",
@@ -23,5 +23,11 @@
   "dependencies": {
     "fs-extra": "^9.0.1",
     "inquirer": "^7.2.0"
-  }
+  },
+  "keywords": [
+    "cli",
+    "editor",
+    "tool",
+    "utils"
+  ]
 }
