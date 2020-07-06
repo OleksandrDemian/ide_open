@@ -1,6 +1,6 @@
 {
   "name": "open-ide",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Opens the folder in editor from command line",
   "bin": {
     "ide-open": "bin/main.js",

@@ -34,7 +34,7 @@ const open = (alias) => {
 		console.warn("Run 'ide-open add [alias] [path]' to create new editor");
 		console.warn("Run 'ide-open list' to list all editors");
 	} else {
-		childProcess.execSync(`"${ide.path}" "${path}"`);
+		childProcess.exec(`"${ide.path}" "${path}"`);
 	}
 };
 
