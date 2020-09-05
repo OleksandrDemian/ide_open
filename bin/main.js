@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 const childProcess = require("child_process");
 const config = require("../lib/config");
+const { sleep } = require("../lib/utils");
 const inquirer = require('inquirer');
 
 const addIDE = (alias, path) => {
@@ -26,15 +27,20 @@ const removeIDE = (alias) => {
 	}
 };
 
-const open = (alias) => {
+const open = async (alias) => {
 	const path = process.cwd();
 	const ide = getIde(alias);
 	if(ide == null){
 		console.error(alias + " is not defined.");
 		console.warn("Run 'ide-open add [alias] [path]' to create new editor");
 		console.warn("Run 'ide-open list' to list all editors");
+		
+		return false;
 	} else {
 		childProcess.exec(`"${ide.path}" "${path}"`);
+		await sleep(100);
+		
+		return true;
 	}
 };
 
@@ -57,7 +63,7 @@ const askAlias = async () => {
 		console.log("You don't have any editor associated with open-ide");
 	} else if(ides.length === 1){
 		console.log("Only one editor is present, I will use it");
-		open(ides[0].alias);
+		await open(ides[0].alias);
 	} else {
 		const aliases = [];
 		for(let i = 0; i < ides.length; i++){
@@ -74,7 +80,7 @@ const askAlias = async () => {
 			}
 		]);
 		if(answers["ide"] !== "cancel"){
-			open(answers["ide"]);
+			await open(answers["ide"]);
 		}
 	}
 };
@@ -105,13 +111,16 @@ const execute = async () => {
 		} else if (args[0] === "list") {
 			listIde();
 		} else {
-			open(args[0]);
+			await open(args[0]);
 		}
 		
-		process.exit(0);
+		return 0;
 	} catch (e) {
-		process.exit(1);
+		console.error(e);
+		return 1;
 	}
 };
 
-execute();
+execute().then((code) => {
+	process.exit(code);
+});
