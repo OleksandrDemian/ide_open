@@ -1,7 +1,7 @@
 ## :card_index: Contents
 
 - [IDE Open](#desktop_computer-ide-open)
-- Usage
+- [Usage](#wrench-usage)
     - [Installation](#building_construction-installation)
     - [Add editor](#rocket-add-editor)
     - [Open folder in editor](#open_file_folder-open-folder-in-editor)
@@ -13,7 +13,7 @@ Opens a folder in editor from cli
 
 ![open-ide](https://raw.githubusercontent.com/OleksandrDemian/ide_open/master/public/open-ide.png)
 
-## Usage
+## :wrench: Usage
 
 ### :building_construction: Installation
 
